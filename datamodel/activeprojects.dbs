@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="activeprojects_lel" id="LogicalDesign-1348" database="LogicalDesign" >
+	<schema name="INSTANCE" catalogname="activeprojects_lel" >
+		<table name="Facts_projects" prior="Facts_t" >
+			<column name="project_fact_id" type="INT" jt="4" mandatory="y" />
+			<column name="school_id" type="INT" jt="4" mandatory="y" />
+			<column name="location_id" type="INT" jt="4" mandatory="y" />
+			<column name="project_details_id" type="INT" jt="4" />
+			<column name="award" type="INT" jt="4" />
+			<index name="pk_Facts_projects" unique="PRIMARY_KEY" >
+				<column name="project_fact_id" />
+				<column name="location_id" />
+			</index>
+			<index name="unq_school_id" unique="UNIQUE_INDEX" >
+				<column name="school_id" />
+			</index>
+			<index name="unq_award" unique="UNIQUE_INDEX" >
+				<column name="award" />
+			</index>
+			<fk name="fk_Facts_projects_dim_school" virtual="y" to_schema="activeprojects_lel.INSTANCE" to_table="dim_school" type="Identifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="school_id" pk="school_id" />
+			</fk>
+			<fk name="fk_Facts_projects_dim_location" virtual="y" to_schema="activeprojects_lel.INSTANCE" to_table="dim_location" type="Identifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="location_id" pk="location_id" />
+			</fk>
+		</table>
+		<table name="dim_location" prior="Entity" >
+			<column name="location_id" type="INT" jt="4" mandatory="y" />
+			<column name="address" type="VARCHAR" length="100" jt="12" />
+			<column name="city" type="VARCHAR" jt="12" />
+			<column name="zip" type="VARCHAR" jt="12" />
+			<index name="pk_dim_location" unique="PRIMARY_KEY" >
+				<column name="location_id" />
+			</index>
+		</table>
+		<table name="dim_projectdetails" prior="Entity" >
+			<column name="project_details_id" type="INT" jt="4" mandatory="y" />
+			<column name="projectdescription" type="INT" jt="4" />
+			<column name="consttype" type="INT" jt="4" />
+			<index name="pk_dim_projectdetails" unique="PRIMARY_KEY" >
+				<column name="project_details_id" />
+			</index>
+			<fk name="fk_dim_projectdetails_Facts_projects" virtual="y" to_schema="activeprojects_lel.INSTANCE" to_table="Facts_projects" type="Identifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="project_details_id" pk="award" />
+			</fk>
+		</table>
+		<table name="dim_school" prior="dim" >
+			<column name="school_id" prior="schoo_id" type="INT" jt="4" mandatory="y" />
+			<column name="name" type="VARCHAR" length="100" jt="12" />
+			<column name="boro" type="VARCHAR" jt="12" />
+			<column name="geo_dist" type="VARCHAR" jt="12" />
+			<index name="pk_dim_school" unique="PRIMARY_KEY" >
+				<column name="school_id" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-2b5" show_relation="columns" >
+		<entity schema="activeprojects_lel.INSTANCE" name="Facts_projects" color="C1D8EE" x="323" y="442" />
+		<entity schema="activeprojects_lel.INSTANCE" name="dim_location" color="C1D8EE" x="697" y="255" />
+		<entity schema="activeprojects_lel.INSTANCE" name="dim_projectdetails" color="C1D8EE" x="595" y="459" />
+		<entity schema="activeprojects_lel.INSTANCE" name="dim_school" color="C1D8EE" x="663" y="629" />
+		<callout x="51" y="51" pointer="Round" >
+			<comment><![CDATA[This is a layout - a diagram with tools.
+- Create new entities by right-clicking the layout. 
+- Double-click entity headers to edit.
+- For a better understanding of the schema, create multiple layouts.
+- Deploy the model into the database by converting it first to the physical design.]]></comment>
+		</callout>
+	</layout>
+</project>
